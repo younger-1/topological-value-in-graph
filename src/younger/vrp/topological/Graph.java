@@ -14,6 +14,9 @@ public class Graph {
     private Deque<Node> removeNodes;
     private Deque<Route> removeRoutes;
 
+    private double topoX;
+    private double topoY;
+
     private Graph() {
         this.routes = new ArrayList<>();
         this.removeNodes = new LinkedList<>();
@@ -153,15 +156,12 @@ public class Graph {
     }
 
     public double topoX() {
-
-        int[] routeLenX = new int[this.getSize()];
-        double[] routeTopoX = new double[this.getSize()];
-
-        IntStream.range(0, this.getSize()).forEach(i -> routeLenX[i] = this.routes.get(i).routeLenX());
-
-        IntStream.range(0, this.getSize()).forEach(i -> routeTopoX[i] = this.routes.get(i).routeTopoX());
-
-        double topoX = IntStream.range(0, this.getSize()).mapToDouble(i -> routeTopoX[i] * routeLenX[i]).sum();
+        topoX = this.routes.stream().mapToDouble(r -> r.getLenX() * r.getTopoX()).sum();
         return topoX;
+    }
+
+    public double topoY() {
+        topoY = this.routes.stream().mapToDouble(r -> r.getLenY() * r.getTopoY()).sum();
+        return topoY;
     }
 }

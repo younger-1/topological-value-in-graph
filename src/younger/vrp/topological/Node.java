@@ -2,10 +2,11 @@
 package younger.vrp.topological;
 
 public class Node {
+
+    private static int static_id = 0;
+    private int id;
     private int x;
     private int y;
-    private int id;
-    private static int static_id = 0;
 
     private Node(int x, int y, int id) {
         this.x = x;

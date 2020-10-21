@@ -6,9 +6,15 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class Route {
+
+    private static int static_id = 0;
     private int id;
     private List<Node> nodes;
-    private static int static_id = 0;
+
+    private int lenX;
+    private int lenY;
+    private double topoX;
+    private double topoY;
 
     private Route(int id) {
         this.nodes = new ArrayList<>();
@@ -87,25 +93,27 @@ public class Route {
         this.getIndexOfNode(node_id).stream().forEach(i -> this.addNode(i + 1, node));
     }
 
-    public int routeLenX() {
-        return IntStream.range(1, this.getSize())
+    public int getLenX() {
+        lenX = IntStream.range(1, this.getSize())
                 .map(i -> Math.abs(this.getNode(i - 1).getX() - this.getNode(i).getX())).sum();
+        return lenX;
     }
 
-    public int routeLenY() {
-        return IntStream.range(1, this.getSize())
+    public int getLenY() {
+        lenY = IntStream.range(1, this.getSize())
                 .map(i -> Math.abs(this.getNode(i - 1).getY() - this.getNode(i).getY())).sum();
+        return lenY;
     }
 
-    public double routeTopoX() {
-        double topo = IntStream.range(1, this.getSize()).mapToDouble(i -> this.getNode(i - 1).getX()
-                * this.getNode(i).getX() * (this.getNode(i - 1).getX() - this.getNode(i).getX())).sum();
-        return topo;
+    public double getTopoX() {
+        topoX = IntStream.range(1, this.getSize()).mapToDouble(i -> this.getNode(i - 1).getX() * this.getNode(i).getX()
+                * (this.getNode(i - 1).getX() - this.getNode(i).getX())).sum();
+        return topoX;
     }
 
-    public double routeTopoY() {
-        double topo = IntStream.range(1, this.getSize()).mapToDouble(i -> this.getNode(i - 1).getY()
-                * this.getNode(i).getY() * (this.getNode(i - 1).getY() - this.getNode(i).getY())).sum();
-        return topo;
+    public double getTopoY() {
+        topoY = IntStream.range(1, this.getSize()).mapToDouble(i -> this.getNode(i - 1).getY() * this.getNode(i).getY()
+                * (this.getNode(i - 1).getY() - this.getNode(i).getY())).sum();
+        return topoY;
     }
 }
